@@ -1,12 +1,13 @@
 # Use Amazon Linux 2023 as the base image
 FROM amazonlinux:2023
 
-# Install the full version of curl and other required packages
+# Remove problematic package and install Node.js
 RUN dnf update -y && \
+  dnf remove -y curl-minimal && \
   dnf install -y \
   gcc-c++ \
   make \
-  curl-full \
+  curl \
   && curl -sL https://rpm.nodesource.com/setup_20.x | bash - \
   && dnf install -y nodejs
 
