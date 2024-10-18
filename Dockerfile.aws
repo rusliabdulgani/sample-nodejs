@@ -1,0 +1,27 @@
+# Use Amazon Linux as the base image
+FROM amazonlinux:2
+
+# Install Node.js and other required packages
+RUN yum update -y && \
+  yum install -y \
+  gcc-c++ \
+  make \
+  curl \
+  && curl -sL https://rpm.nodesource.com/setup_lts.x | bash - \
+  && yum install -y nodejs
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the app's source code
+COPY . .
+
+# Expose port
+EXPOSE 3003
+
+# Start the app
+CMD ["npm", "start"]
