@@ -1,14 +1,14 @@
-# Use Amazon Linux as the base image
+# Use Amazon Linux 2023 as the base image
 FROM amazonlinux:2023
 
-# Install Node.js and other required packages
-RUN yum update -y && \
-  yum install -y \
+# Install the full version of curl and other required packages
+RUN dnf update -y && \
+  dnf install -y \
   gcc-c++ \
   make \
-  curl \
-  && curl -sL https://rpm.nodesource.com/setup_lts.x | bash - \
-  && yum install -y nodejs
+  curl-full \
+  && curl -sL https://rpm.nodesource.com/setup_20.x | bash - \
+  && dnf install -y nodejs
 
 # Create app directory
 WORKDIR /usr/src/app
